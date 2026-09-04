@@ -1,0 +1,47 @@
+/* =================================
+   Motion primitives used by the elevated
+   Home + tab pages (globals.css imports this
+   before its own rules run).
+   ================================= */
+
+@keyframes floatY {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -8px, 0); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spinReverse {
+  to { transform: rotate(-360deg); }
+}
+
+@keyframes pulseDot {
+  0% { box-shadow: 0 0 0 0 rgba(67, 211, 145, .55); }
+  70% { box-shadow: 0 0 0 8px rgba(67, 211, 145, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(67, 211, 145, 0); }
+}
+
+@keyframes pulseRing {
+  0% { box-shadow: 0 0 0 0 rgba(101, 87, 232, .35); }
+  70% { box-shadow: 0 0 0 10px rgba(101, 87, 232, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(101, 87, 232, 0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes popIn {
+  0% { opacity: 0; transform: scale(.94) translateY(6px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

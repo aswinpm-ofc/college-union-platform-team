@@ -691,3 +691,27 @@
   .helplines-grid { grid-template-columns: 1fr; }
   .blood-hero-content { flex-direction: column; align-items: flex-start; }
 }
+
+/* Card grids used fixed 320/360px minimums, which overflow narrow phones. */
+.donor-cards-grid { grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr)); }
+.requests-grid { grid-template-columns: repeat(auto-fill, minmax(min(360px, 100%), 1fr)); }
+
+@media (max-width: 700px) {
+  .blood-hero-2026 { padding: 22px 18px; }
+  .blood-hero-title { font-size: 22px; }
+  .blood-hero-content > div:last-child { display: none; }
+
+  /* Tab bar scrolls sideways rather than wrapping */
+  .blood-nav-tabs { overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .blood-nav-tabs::-webkit-scrollbar { display: none; }
+  .blood-tab-btn { flex: none; white-space: nowrap; font-size: 13px; padding: 10px 12px; }
+
+  .blood-filter-section { padding: 16px; }
+  .donor-card-actions, .request-card-2026 > div:last-child { flex-wrap: wrap; }
+  .btn-request-blood, .btn-contact-outline { flex: 1 1 160px; justify-content: center; }
+  .blood-modal { padding: 18px; border-radius: 16px; }
+}
+
+@media (max-width: 430px) {
+  .blood-stats-grid { grid-template-columns: 1fr; }
+}

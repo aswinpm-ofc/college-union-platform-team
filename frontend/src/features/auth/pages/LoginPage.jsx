@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { authService } from "../../../services/auth/authService";
+import BrandMark from "../../../components/ui/BrandMark";
 
 const quickUsers = [
   { label: "Student", email: "student@college.local", role: "Student" },
@@ -49,7 +50,7 @@ export default function LoginPage({ onLogin }) {
       <div className="login-panel">
         <div className="login-hero">
           <div className="brand header-block">
-            <div className="brandmark">U</div>
+            <div className="brandmark"><BrandMark size={24} /></div>
             <div>
               <b>UnionHub</b>
               <small>College Union</small>
