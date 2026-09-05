@@ -14,9 +14,9 @@ import {
   UserRound,
   ShieldCheck,
   X,
-  Sparkles,
 } from "lucide-react";
 import { modules } from "../../data/demo/modules";
+import BrandMark from "../ui/BrandMark";
 
 export default function Sidebar({ page, go, open, close, role, user, unreadCount = 0, onLogout }) {
   const userName = user?.name || "Aswin P.";
@@ -32,7 +32,7 @@ export default function Sidebar({ page, go, open, close, role, user, unreadCount
     <aside className={"sidebar " + (open ? "open" : "")}>
       <div className="brand">
         <div className="brandmark">
-          <Sparkles size={19} />
+          <BrandMark size={20} />
         </div>
         <div>
           <b>UnionHub</b>
