@@ -12,13 +12,19 @@ const defaultPreferences = {
 
 export default function Profile({ role, user, onLogout }) {
   const currentUser = user || { name: "Aswin P.", initials: "AP", email: "student@college.local" };
-  const [profile, setProfile] = useState({
-    fullName: currentUser.name || "Aswin P.",
-    department: "Computer Science",
-    semester: "Semester 5",
-    email: currentUser.email || "student@college.local",
-    phone: "+91 98765 43210",
-    notifications: { ...defaultPreferences },
+  
+  const [profile, setProfile] = useState(() => {
+    const savedUser = localStorage.getItem("unionhub-user");
+    const parsedUser = savedUser ? JSON.parse(savedUser) : {};
+    
+    return {
+      fullName: parsedUser.name || currentUser.name || "Aswin P.",
+      department: parsedUser.department || "Computer Science",
+      semester: parsedUser.semester || "Semester 5",
+      email: parsedUser.email || currentUser.email || "student@college.local",
+      phone: parsedUser.phone || "+91 98765 43210",
+      notifications: { ...defaultPreferences },
+    };
   });
   const [saved, setSaved] = useState(false);
 
@@ -38,7 +44,7 @@ export default function Profile({ role, user, onLogout }) {
     }));
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const initials = profile.fullName
       .split(" ")
       .slice(0, 2)
@@ -49,17 +55,32 @@ export default function Profile({ role, user, onLogout }) {
       ...currentUser,
       name: profile.fullName,
       email: profile.email,
+      department: profile.department,
+      semester: profile.semester,
+      phone: profile.phone,
       initials,
     };
 
-    try {
+   try {
+      const prefResponse = await fetch("/api/notification-preferences", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(profile.notifications),
+      });
+
+      if (!prefResponse.ok) {
+        throw new Error("Failed to update notification preferences");
+      }
+
       localStorage.setItem("unionhub-user", JSON.stringify(nextUser));
+      
       setSaved(true);
       setTimeout(() => setSaved(false), 1500);
-    } catch {
+    } catch (error) {
+      console.error("Error saving profile details:", error);
       setSaved(false);
     }
-  };
+  }; 
 
   return (
     <>
