@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { PageHead, Card } from "../../../components/common/PagePrimitives";
 import ReviewQueue from "../components/ReviewQueue";
+import DepartmentManager from "../components/DepartmentManager";
 import { permissionService } from "../../../services/auth/permissionService";
-import { Lock } from "lucide-react";
+import { Lock, FileText, Building2 } from "lucide-react";
 
 export default function AcademicMaintainerPage() {
   const { notify, user } = useOutletContext();
+  const [tab, setTab] = useState("materials");
 
   const canAccess = permissionService.hasPermission("REVIEW_MATERIAL", user?.role);
 
@@ -36,7 +38,36 @@ export default function AcademicMaintainerPage() {
         title="Maintainer Console"
         desc="Review, approve, reject and unpublish academic materials."
       />
-      <ReviewQueue notify={notify} user={user} />
+
+      {/* ── Tab Switcher ────────────────────────────────────────── */}
+      <div className="academic-nav" style={{ marginBottom: "20px" }}>
+        <button
+          className={tab === "materials" ? "active" : ""}
+          onClick={() => setTab("materials")}
+          style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
+        >
+          <FileText size={15} />
+          Pending Uploads
+        </button>
+
+        <button
+          className={tab === "departments" ? "active" : ""}
+          onClick={() => setTab("departments")}
+          style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
+        >
+          <Building2 size={15} />
+          Departments & Requests
+        </button>
+      </div>
+
+      {/* ── Active View ─────────────────────────────────────────── */}
+      {tab === "materials" && (
+        <ReviewQueue notify={notify} user={user} />
+      )}
+
+      {tab === "departments" && (
+        <DepartmentManager notify={notify} />
+      )}
     </>
   );
 }
